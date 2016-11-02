@@ -1,6 +1,6 @@
 # TokenEx
 
-**TODO: Add description**
+A Elixir client for the [TokenEx](https://www.tokenex.com) API.
 
 ## Installation
 
@@ -21,4 +21,3 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       [applications: [:tokenex]]
     end
     ```
-
