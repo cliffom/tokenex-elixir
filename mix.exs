@@ -14,7 +14,7 @@ defmodule TokenEx.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :hackney]]
   end
 
   # Dependencies can be Hex packages:
@@ -27,7 +27,8 @@ defmodule TokenEx.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:tesla, "~> 0.5.0"},
-      {:poison, ">= 1.0.0"}]
+    [{:tesla, "~> 0.5.2"},
+      {:poison, "~> 3.0"},
+      {:hackney, "~> 1.6"}]
   end
 end
