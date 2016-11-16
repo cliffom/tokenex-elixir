@@ -15,8 +15,14 @@ defmodule TokenEx do
     request = %{"Data" => data,
       "TokenScheme" => token_scheme} |> Map.merge(config)
 
-    IO.inspect (request)
     response = post("/Tokenize", request)
-    {:ok, %{}}
+    {:ok, response}
+  end
+
+  def detokenize(token, config) do
+    request = %{"Token" => token} |> Map.merge(config)
+
+    response = post("/Detokenize", request)
+    {:ok, response}
   end
 end
