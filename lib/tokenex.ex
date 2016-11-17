@@ -16,9 +16,19 @@ defmodule TokenEx do
     make_request("Tokenize", params, config)
   end
 
+  def validate_token(token, config) do
+    params = %{"Token" => token}
+    make_request("ValidateToken", params, config)
+  end
+
   def detokenize(token, config) do
     params = %{"Token" => token}
     make_request("Detokenize", params, config)
+  end
+
+  def delete_token(token, config) do
+    params = %{"Token" => token}
+    make_request("DeleteToken", params, config)
   end
 
   defp make_request(action, data, config) do
