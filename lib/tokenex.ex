@@ -13,7 +13,18 @@ defmodule TokenEx do
   def make_request(action, data, config) do
     request = data |> Map.merge(config)
     response = post(action, request)
-    {:ok, response}
+
+    case response.status do
+      200 ->
+        status =
+          case String.strip(response.body["Error"]) do
+            "" -> :ok
+            _ -> :error
+          end
+        {status, response.body}
+
+      _ -> {:error, %{}}
+    end
   end
 
   def tokenize(data, token_scheme, config) do
