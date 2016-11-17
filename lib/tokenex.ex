@@ -10,23 +10,6 @@ defmodule TokenEx do
       "APIKey" => api_key}
   end
 
-  def make_request(action, data, config) do
-    request = data |> Map.merge(config)
-    response = post(action, request)
-
-    case response.status do
-      200 ->
-        status =
-          case String.strip(response.body["Error"]) do
-            "" -> :ok
-            _ -> :error
-          end
-        {status, response.body}
-
-      _ -> {:error, %{}}
-    end
-  end
-
   def tokenize(data, token_scheme, config) do
     params = %{"Data" => data,
       "TokenScheme" => token_scheme}
@@ -36,5 +19,24 @@ defmodule TokenEx do
   def detokenize(token, config) do
     params = %{"Token" => token}
     make_request("Detokenize", params, config)
+  end
+
+  defp make_request(action, data, config) do
+    request = data |> Map.merge(config)
+    post(action, request) |> get_response
+  end
+
+  defp get_response(response) do
+    case response.status do
+      200 ->
+        status =
+          case response.body["Success"] do
+            true  -> :ok
+            false -> :error
+          end
+        {status, response.body}
+
+      _ -> {:error, %{"Error" => "Invalid HTTP status code: " <> Integer.to_string(response.status)}}
+    end
   end
 end
